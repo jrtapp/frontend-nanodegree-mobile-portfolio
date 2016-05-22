@@ -22,6 +22,7 @@
 
 // Include Gulp & Tools We'll Use
 var gulp = require('gulp');
+var jshint = require('gulp-jshint');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
