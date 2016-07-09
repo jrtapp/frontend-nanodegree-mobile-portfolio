@@ -53,3 +53,33 @@ The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstra
 
 * <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
 * <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+
+### Changes Implemented
+Changes are indicated by #JT in affected .js, .css, .html files in the /src folder and subfolders.  A list of the changes in each file is shown here:
+
+#### main.js
+function changePizzaSizes
+* Moved reflow inducing calls out of loop
+* Changed form querySelectorAll to getElementsByClassName
+
+function updatePositions
+* Changed form querySelectorAll to getElementsByClassName
+* Moved static math computation out of loop and replaced modulus with
+nested for loop, changing increment of outer loop and appropriate parameters
+
+function pizzaElementGenerator
+* pizzaContainer - Removed inline style applied by JavaScript and changed form grid to flex styling
+* pizzaDescriptionContainer - Removed inline style on and col-md-6 class, preferring flex box
+
+#### style.css
+.mover 
+* Set width and height from JavaScript which also removes declaration conflict
+
+
+#### pizza.html
+
+
+
+
+
+

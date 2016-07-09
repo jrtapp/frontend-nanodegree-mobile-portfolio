@@ -3,26 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content=" FILL ME IN ">
-    <meta name="author" content=" FILL ME IN ">
+    <meta name="description" content="Demo site for web page optimization">
+    <meta name="author" content="John Tapp - #JT">
     <title>Cameron Pittman: Portfolio</title>
 
-    <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <!-- #JT - Moved font to end of page -->
 
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/print.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" inline>
+    <!-- #JT - Assigned print styles to media=print -->
+    <link href="css/print.css" rel="stylesheet" media="print">
 
-    <script>
-      (function(w,g){w['GoogleAnalyticsObject']=g;
-      w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
-
-      // Optional TODO: replace with your Google Analytics profile ID.
-      ga('create', 'UA-20296023-4');
-      ga('send', 'pageview');
-    </script>
-    <script src="http://www.google-analytics.com/analytics.js"></script>
-    <script async src="js/perfmatters.js"></script>
+    <!-- #JT - Moved Google Analytics to bottom of page -->
+    <script async src="js/perfmatters.js" inline></script>
   </head>
 
   <body>
@@ -57,7 +49,8 @@
           </li>
 
           <li>
-            <img style="width: 100px;" src="views/images/pizzeria.jpg">
+          <!-- #JT - 100px wide version of pizzaria.jpg created in PhotoShop, renamed file -->
+            <img style="width: 100px;" src="views/images/pizzeria-100.jpg">
             <a href="views/pizza.html">Cam's Pizzeria</a>
             <p>Who wants a performant pizza?</p>
           </li>
@@ -68,4 +61,15 @@
       <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
     </footer>
   </body>
+    <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <script>
+    (function(w,g){w['GoogleAnalyticsObject']=g;
+    w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
+
+    // Optional TODO: replace with your Google Analytics profile ID.
+    ga('create', 'UA-20296023-4');
+    ga('send', 'pageview');
+  </script>
+  <script src="http://www.google-analytics.com/analytics.js"></script>
 </html>

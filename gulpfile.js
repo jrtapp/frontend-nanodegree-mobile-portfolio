@@ -22,61 +22,95 @@
 
 // Include Gulp & Tools We'll Use
 var gulp = require('gulp');
-var jshint = require('gulp-jshint');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var runSequence = require('run-sequence');
+var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync');
+var useref = require('gulp-useref');
+var uncss = require('gulp-uncss');
+var uglify = require('gulp-uglify');
+var gulpIf = require('gulp-if');
+var cleancss = require('gulp-clean-css');
+var imagemin = require('gulp-imagemin');
+var inlinesource = require('gulp-inline-source');
+var cache = require('gulp-cache');
+var del = require('del');
+var jshint = require('gulp-jshint');
+var jshintStylish = require('jshint-stylish');
+var runSequence = require('run-sequence');
 var pagespeed = require('psi');
+var $ = require('gulp-load-plugins')();
+
 var reload = browserSync.reload;
 
 // Lint JavaScript
 gulp.task('jshint', function() {
-  return gulp.src(['app/scripts/**/*.js', 'app/styleguide/**/*.js'])
-    .pipe(reload({stream: true, once: true}))
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
+  console.log('jshint: running');
+  return gulp.src(['src/**/*.js'])
+    //.pipe(reload({stream: true, once: true}))
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    //.pipe(gulpIf(!browserSync.active, jshint.reporter('fail')));
 });
 
 // Optimize Images
 gulp.task('images', function() {
-  return gulp.src('app/images/**/*')
-    .pipe(gulp.dest('dist/images'))
-    .pipe($.size({title: 'images'}));
+  console.log('images: running');
+  return gulp.src(['./src/img/*','./src/views/images/*'])
+    .pipe(imagemin())
+    .pipe(gulp.dest(function(file) {
+      console.log(file.base);
+    return file.base.replace('src','dist');
+  }))
+    //.pipe(gulp.dest('dist/images'))
+    //.pipe($.size({title: 'images'}));
+});
+
+// Inline script and css
+gulp.task('inline', function(){
+ return gulp.src(['src/**/*.html'])
+    .pipe(inlinesource())
+    //.pipe(reload({stream: true, once: true}))
+    .pipe(gulp.dest('dist'))
 });
 
 // Copy All Files At The Root Level (app)
 gulp.task('copy', function() {
+  console.log('copy: running');
   return gulp.src([
-    'app/*',
-    '!app/*.html',
+    'src/*',
+    'src/*.html',
+    'src/*.ico',
     'node_modules/apache-server-configs/dist/.htaccess'
   ], {
     dot: true
-  }).pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'copy'}));
+  })
+  .pipe(gulp.dest('dist'))
+    //.pipe($.size({title: 'copy'}));
 });
 
 // Copy All Filescopy-workerscripts At The Root Level (app)
-gulp.task('copy-workerscripts', function() {
-  return gulp.src('app/scripts/jsqrcode/*.js')
-    .pipe(gulp.dest('dist/scripts/jsqrcode/'))
-    .pipe($.size({title: 'copy-workerscripts'}));
-});
+//gulp.task('copy-workerscripts', function() {
+//  return gulp.src('src/scripts/jsqrcode/*.js')
+//    .pipe(gulp.dest('dist/scripts/jsqrcode/'))
+//    .pipe($.size({title: 'copy-workerscripts'}));
+//});
 
 // Copy image files from the Styleguide
 gulp.task('styleguide-images', function() {
-  return gulp.src('app/styleguide/**/*.{svg,png,jpg}')
+  console.log('styleguide-images: running');
+
+  return gulp.src('src/styleguide/**/*.{svg,png,jpg}')
     .pipe(gulp.dest('dist/styleguide/'))
-    .pipe($.size({title: 'styleguide-images'}));
+    //.pipe($.size({title: 'styleguide-images'}));
 });
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function() {
-  return gulp.src(['app/fonts/**'])
+  console.log('fonts: running');
+  return gulp.src(['src/fonts/**'])
     .pipe(gulp.dest('dist/fonts'))
-    .pipe($.size({title: 'fonts'}));
+    //.pipe($.size({title: 'fonts'}));
 });
 
 // Compile and Automatically Prefix Stylesheets
@@ -93,11 +127,12 @@ gulp.task('styles', function() {
     'android >= 4.4',
     'bb >= 10'
   ];
+  console.log('styles: running');
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    'app/**/*.scss',
-    'app/styles/**/*.css'
+    'src/**/*.scss',
+    'src/**/*.css'
   ])
     .pipe($.changed('styles', {extension: '.scss'}))
     .pipe($.sass({
@@ -114,30 +149,29 @@ gulp.task('styles', function() {
 
 // Concatenate And Minify JavaScript
 gulp.task('scripts', function() {
-  var sources = ['app/scripts/*.js',
-    'app/styleguide/wskComponentHandler.js', 'app/styleguide/**/*.js'];
+  var sources = ['src/views/js/*.js',
+    'src/styleguide/wskComponentHandler.js', 'src/styleguide/**/*.js'];
+  console.log('scripts: sources=' + sources);
   return gulp.src(sources)
     .pipe($.concat('main.js'))
-    // .pipe($.uglify({preserveComments: 'some'}))
+    .pipe(uglify({preserveComments: 'some'}))
     // Output Files
-    .pipe(gulp.dest('dist/scripts'))
+    .pipe(gulp.dest('dist/views/js'))
     .pipe($.size({title: 'scripts'}));
 });
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function() {
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
-
-  return gulp.src('app/**/**/*.html')
-    .pipe(assets)
+  //var assets = $.useref.assets({searchPath: '{.tmp,src}'});
+  //var assets = useref.assets({searchPath: '{.tmp,src}'});
+  console.log('html: running');
+  return gulp.src(['src/**/*.html'])
+    .pipe(useref())
     // Remove Any Unused CSS
     // Note: If not using the Style Guide, you can delete it from
     // the next line to only include styles your project uses.
-    .pipe($.if('*.css', $.uncss({
-      html: [
-        'app/index.html',
-        'app/styleguide.html'
-      ],
+    // , 'src/styleguide.html'
+    .pipe($.if('*.css', uncss({html: ['dist/index.html'],
       // CSS Selectors for UnCSS to ignore
       ignore: []
     })))
@@ -145,10 +179,11 @@ gulp.task('html', function() {
     // Concatenate And Minify Styles
     // In case you are still using useref build blocks
     .pipe($.if('*.css', $.csso()))
-    .pipe(assets.restore())
-    .pipe($.useref())
+    //.pipe(assets.restore())
+    //.pipe(useref())
     // Minify Any HTML
     .pipe($.if('*.html', $.minifyHtml()))
+    .pipe(inlinesource())
     // Output Files
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'html'}));
@@ -158,7 +193,7 @@ gulp.task('html', function() {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles'], function() {
+gulp.task('serve', ['default'], function() {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -167,13 +202,13 @@ gulp.task('serve', ['styles'], function() {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: ['.tmp', 'app']
+    server: ['.tmp', 'src']
   });
 
-  gulp.watch(['app/**/**/**/*.html'], reload);
-  gulp.watch(['app/**/**/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js','app/styleguide/**/*.js'], ['jshint']);
-  gulp.watch(['app/images/**/*'], reload);
+  gulp.watch(['src/**/*.html'], reload);
+  gulp.watch(['src/**/*.{scss,css}'], ['styles', reload]);
+  gulp.watch(['src/**/*.js'], ['jshint']);
+  gulp.watch(['src/**/*.png', 'src/**/*.jpg', 'src/**/*.jpeg'], reload);
 });
 
 // Build and serve the output from the dist build
@@ -184,15 +219,15 @@ gulp.task('serve:dist', ['default'], function() {
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
-    // https: true,
+    //https: true,
     server: 'dist',
-    baseDir: "dist"
+    //baseDir: ''
   });
 });
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function(cb) {
-  runSequence('styles', ['html', 'scripts', 'images', 'styleguide-images', 'fonts', 'copy', 'copy-workerscripts'], cb);
+  runSequence('styles', ['scripts','html','images', 'fonts', 'copy'], cb);
 });
 
 // Run PageSpeed Insights

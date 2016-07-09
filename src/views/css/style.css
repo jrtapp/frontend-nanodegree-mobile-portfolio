@@ -29,22 +29,55 @@ form {
   font-weight: 800;
 }
 
+ /* 
+   #JT - Changed to remove width and height from JavaScript
+   #JT - Added transform style
+ */
 .mover {
   position: fixed;
-  width: 256px;
+  height: 100px;
+  width: 73.333px;
   z-index: -1;
+  transform: translateZ(0);
 }
 
-.randomPizzaContainer {
-  float: left;
+/*
+  #JT - Changed display format to flex instead of flex & grid
+*/
+#randomPizzas
+{
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 15px;
 }
 
+/* #JT - Float not needed with flex */
+.randomPizzaContainer {
+  /* float: left;*/
+  width: 33.3%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.randomPizzaContainer div {
+  width: 45%;
+}
+
+.randomPizzaContainer div ul
+{
+  margin-left: 0;
+  padding-left: 1em;
+}
+
+/* #JT - Not needed with flex */
+/*
 .randomPizzaContainer:after {
   content: "";
   display: table;
   clear:both;
 }
+*/
 
  .container {
   background-color: rgba(240, 60, 60, 0.8);

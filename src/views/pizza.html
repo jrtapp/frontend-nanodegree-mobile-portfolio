@@ -1,8 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/bootstrap-grid.css">
+<!-- #JT - Added viewport -->
+<meta name=viewport content="width=device-width, initial-scale=1">
+<!-- #JT Added ./ relative reference to CSS Link href -->
+  <link rel="stylesheet" href="./css/style.css" inline>
+  <link rel="stylesheet" href="./css/bootstrap-grid.css">
 </head>
 
 <body>
@@ -98,15 +101,18 @@
           </div>
           <div id="pizzaSize" class="col-md-6">Medium</div>
           <div class="col-md-12">
-            <input id="sizeSlider" type="range" min="1" max="3" value="2" step="1" onchange="resizePizzas(this.value)"></input>
+            <input id="sizeSlider" type="range" min="1" max="4" value="2" step="1" onchange="resizePizzas(this.value)"></input>
           </div>
         </div>
-        <div id="randomPizzas" class="row">
-          <div id="pizza0" class="randomPizzaContainer" style="width:33.33%;">
-            <div class="col-md-6">
+        <!-- 
+        #JT - removed row and col-md-6 classes and inline styles to implement flex 
+        -->
+        <div id="randomPizzas">
+          <div id="pizza0" class="randomPizzaContainer">
+            <div>
               <img src="images/pizza.png" class="img-responsive">
             </div>
-            <div class="col-md-6">
+            <div>
               <h4>The Udacity Special</h4>
               <ul>
                 <li>Turkey</li>
@@ -119,11 +125,11 @@
               </ul>
             </div>
           </div>
-          <div id="pizza1" class="randomPizzaContainer" style="width:33.33%;">
-            <div class="col-md-6">
+          <div id="pizza1" class="randomPizzaContainer">
+            <div>
               <img src="images/pizza.png" class="img-responsive">
             </div>
-            <div class="col-md-6">
+            <div>
               <h4>The Cameron Special</h4>
               <ul>
                 <li>Chicken</li>
@@ -137,7 +143,10 @@
     </div>
     <div id="footer" class="col-md-12">Thanks for visiting! &copy; 2014 Udacity</div>
   </div>
+  <!-- build:js js/main.js -->
   <script type="text/javascript" src="js/main.js"></script>
+  <!-- endbuild -->
+
 </body>
 
 </html>
