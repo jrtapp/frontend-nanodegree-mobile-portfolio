@@ -57,7 +57,17 @@ The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstra
 ### Changes Implemented
 Changes are indicated by #JT in affected .js, .css, .html files in the /src folder and subfolders.  A list of the changes in each file is shown here:
 
+#### pizza.html
+Changes in HTML
+* Put pizzaria image in HTML5 Picture element to enhance responsiveness
+
+#### images
+Image changes
+* Created downsized images to meet scaling break points
+
 #### main.js
+Changes in functions as listed:
+
 function changePizzaSizes
 * Moved reflow inducing calls out of loop
 * Changed form querySelectorAll to getElementsByClassName
@@ -66,20 +76,28 @@ function updatePositions
 * Changed form querySelectorAll to getElementsByClassName
 * Moved static math computation out of loop and replaced modulus with
 nested for loop, changing increment of outer loop and appropriate parameters
+* Set offset variable to represent scroll position at draw time
+* Set phase array to generate lateral offset for pizzas using Math.sin
 
 function pizzaElementGenerator
 * pizzaContainer - Removed inline style applied by JavaScript and changed form grid to flex styling
 * pizzaDescriptionContainer - Removed inline style on and col-md-6 class, preferring flex box
 
+function resizePizzas
+* Changed from querySelector to getElementById to reduce DOM search tree
+* Added XL option
+
+function determineDX
+* Added XL option
+
+event DOMContentLoaded
+* Changed pizza count to 40, instead of 200
+* Moved width and height style to CSS
+
 #### style.css
+Changes in stylesheet
+
 .mover 
 * Set width and height from JavaScript which also removes declaration conflict
-
-
-#### pizza.html
-
-
-
-
 
 

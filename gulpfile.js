@@ -47,10 +47,8 @@ var reload = browserSync.reload;
 gulp.task('jshint', function() {
   console.log('jshint: running');
   return gulp.src(['src/**/*.js'])
-    //.pipe(reload({stream: true, once: true}))
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
-    //.pipe(gulpIf(!browserSync.active, jshint.reporter('fail')));
 });
 
 // Optimize Images
@@ -62,15 +60,12 @@ gulp.task('images', function() {
       console.log(file.base);
     return file.base.replace('src','dist');
   }))
-    //.pipe(gulp.dest('dist/images'))
-    //.pipe($.size({title: 'images'}));
 });
 
 // Inline script and css
 gulp.task('inline', function(){
  return gulp.src(['src/**/*.html'])
     .pipe(inlinesource())
-    //.pipe(reload({stream: true, once: true}))
     .pipe(gulp.dest('dist'))
 });
 
@@ -86,15 +81,7 @@ gulp.task('copy', function() {
     dot: true
   })
   .pipe(gulp.dest('dist'))
-    //.pipe($.size({title: 'copy'}));
 });
-
-// Copy All Filescopy-workerscripts At The Root Level (app)
-//gulp.task('copy-workerscripts', function() {
-//  return gulp.src('src/scripts/jsqrcode/*.js')
-//    .pipe(gulp.dest('dist/scripts/jsqrcode/'))
-//    .pipe($.size({title: 'copy-workerscripts'}));
-//});
 
 // Copy image files from the Styleguide
 gulp.task('styleguide-images', function() {
@@ -162,8 +149,6 @@ gulp.task('scripts', function() {
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function() {
-  //var assets = $.useref.assets({searchPath: '{.tmp,src}'});
-  //var assets = useref.assets({searchPath: '{.tmp,src}'});
   console.log('html: running');
   return gulp.src(['src/**/*.html'])
     .pipe(useref())
@@ -179,8 +164,6 @@ gulp.task('html', function() {
     // Concatenate And Minify Styles
     // In case you are still using useref build blocks
     .pipe($.if('*.css', $.csso()))
-    //.pipe(assets.restore())
-    //.pipe(useref())
     // Minify Any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     .pipe(inlinesource())
@@ -221,7 +204,6 @@ gulp.task('serve:dist', ['default'], function() {
     //       will present a certificate warning in the browser.
     //https: true,
     server: 'dist',
-    //baseDir: ''
   });
 });
 

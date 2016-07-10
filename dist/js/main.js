@@ -384,7 +384,6 @@ var pizzaElementGenerator = function(i) {
   pizzaImageContainer.appendChild(pizzaImage);
   pizzaContainer.appendChild(pizzaImageContainer);
 
-
   // #JT - Removed inline style and col-md-6 class, preferring flex box
   //pizzaDescriptionContainer.classList.add("col-md-6");
 
@@ -405,7 +404,7 @@ var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
-  /* #JT - Change from querySelector to getElementById, to reduce DOM result set
+  /* #JT - Change from querySelector to getElementById to reduce DOM result set
      Before: 17.9 ms
      After: 13.8 ms -> 72 fps!
   */
@@ -530,7 +529,8 @@ function updatePositions() {
       Before: < 137 ms
       After: < 30 ms
 
-      #JT Moved math out of loop and replaced modulus function with internal loop
+      #JT Moved math out of loop and replaced modulus 
+      function with internal loop
       Parse HTML
       Before: 95.96 ms
       After: 63.27 ms
