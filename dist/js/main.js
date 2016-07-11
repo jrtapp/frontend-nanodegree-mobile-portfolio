@@ -449,7 +449,7 @@ var resizePizzas = function(size) {
         case "3":
           return 0.5;
         case "4":
-          return 1;
+          return 0.75;
         default:
           console.log("bug in sizeSwitcher");
       }
@@ -475,6 +475,7 @@ var resizePizzas = function(size) {
     var containers = document.getElementsByClassName("randomPizzaContainer");
     var dx = determineDx(containers[0], size);
     var newwidth = (containers[0].offsetWidth + dx) + 'px';
+
     for (var i = 0; i < containers.length; i++) {
       containers[i].style.width = newwidth;
     }

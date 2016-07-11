@@ -100,4 +100,14 @@ Changes in stylesheet
 .mover 
 * Set width and height from JavaScript which also removes declaration conflict
 
+### Gulp
+Preprocessing operations performed by gulp, listed by task name.
+* clean - Cleans dist output folder
+* styles - Preprocess SASS, add vendor prefixes and compress CSS
+* scripts - Concatenate and minify JavaScript
+* html - Minify HTML and embed CSS and JavaScript
+* images - Compress images
+* fonts - Copy web fonts
+* copy - Copy remaining items to dist
+
 

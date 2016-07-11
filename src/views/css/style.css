@@ -53,11 +53,13 @@ form {
 }
 
 /* #JT - Float not needed with flex */
+/* #JT - Added translate style */
 .randomPizzaContainer {
   /* float: left;*/
   width: 33.3%;
   display: flex;
   justify-content: space-around;
+  transform: translateZ(0);
 }
 
 .randomPizzaContainer div {

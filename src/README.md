@@ -100,6 +100,14 @@ Changes in stylesheet
 .mover 
 * Set width and height from JavaScript which also removes declaration conflict
 
+.randomPizzaContainer
+* float - removed, not needed with flex
+* translate - added to avoid excessive reflow
+
+
+.randomPizzaContainer:after
+* Class removed - not needed with flex
+
 ### Gulp
 Preprocessing operations performed by gulp, listed by task name.
 * clean - Cleans dist output folder
